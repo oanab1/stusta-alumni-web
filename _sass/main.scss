@@ -1,0 +1,27 @@
+body {
+    padding-top: 50px;
+}
+
+[id] {
+    margin-top: -50px;
+    padding-top: 50px;
+}
+#toc {
+    position: fixed;
+
+    li {
+        list-style: none;
+    }
+}
+
+.cover {
+    min-height: 35em;
+}
+.cover-image {
+    background: #66503d;
+    background-image: url('https://pingendo.github.io/pingendo-bootstrap/assets/blurry/800x600/9.jpg');
+    background: -moz-linear-gradient(45deg, #66503d 0%, #947445 25%, #b89c53 37.5%, #d7c563 50%, #d8d169 62.5%, #beb965 75%, #aea677 100%);
+    background: -webkit-linear-gradient(45deg, #66503d 0%, #947445 25%, #b89c53 37.5%, #d7c563 50%, #d8d169 62.5%, #beb965 75%, #aea677 100%);
+    background: linear-gradient(45deg, #66503d 0%, #947445 25%, #b89c53 37.5%, #d7c563 50%, #d8d169 62.5%, #beb965 75%, #aea677 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66503d', endColorstr='#aea677',GradientType=1 );
+}

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% link index.html %}"><span>StuSta-Alumni e.V.</span></a>
+            {% unless page.hide_cta %}
+                <a class="navbar-btn btn btn-default" href="{% link mitglied-werden.html %}">Mitglied werden</a>
+            {% endunless %}
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% assign pages = site.html_pages | sort: 'position' %}
+                {% for item in pages %}
+                    {% unless item.position == nil %}
+                        <li {% if page.url == item.url %}class="active"{% endif %}>
+                            <a href="{{ item.url }}">{{ item.title }}</a>
+                        </li>
+                    {% endunless %}
+                {% endfor %}
+                
+                <li>
+                    <a href="/admidio/adm_program/index.php">Mitgliederbereich</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,1 +1,19 @@
-theme: jekyll-theme-architect
+collections:
+  events:
+    output: true
+
+defaults:
+  - scope:
+      path: ''
+      type: events
+    values:
+      layout: event
+      singleView: true
+  - scope:
+      path: ''
+    values:
+      layout: wide
+  - scope:
+      path: assets/events
+    values:
+      collection: events
