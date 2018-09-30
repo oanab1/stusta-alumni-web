@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% link index.liquid %}"><span>StuSta-Alumni e.V.</span></a>
+        {% unless page.hide_cta %}
+            <a
+                class="navbar-btn btn btn-secondary btn-primary"
+                href="{% link mitglied-werden.liquid %}"
+            >Mitglied werden</a>
+        {% endunless %}
+
+        <button
+            type="button"
+            class="navbar-toggler"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                {% assign pages = site.html_pages | sort: 'position' %}
+                {% for item in pages %}
+                    {% unless item.position == nil %}
+                        <li
+                            class="{{ '' -}}
+                                nav-item
+                                {%- if page.url == item.url or page.navSection contains item.title -%}
+                                    {{- '' }} active
+                                {%- endif -%}
+                            {{- '' }}"
+                        >
+                            <a class="nav-link" href="{{ item.url }}">{{ item.title }}</a>
+                        </li>
+                    {% endunless %}
+                {% endfor %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admidio/adm_program/index.php">Mitgliederbereich</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

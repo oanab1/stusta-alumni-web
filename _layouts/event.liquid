@@ -1,0 +1,132 @@
+---
+layout: default
+---
+<div class="container">
+    <h1 class="text-primary mt-4">
+        Veranstaltungen
+    </h1>
+    <a href="{%- link veranstaltungen.liquid -%}">Zurück zur Übersicht</a>
+
+    <section>
+        <h2 class="d-flex justify-content-between align-items-baseline flex-wrap">
+            {{- page.longTitle | default: page.title -}}
+            <small>{{- page.date | date: '%d.%m.%Y' -}}</small>{{- '' -}}
+        </h2>
+
+        {{ content }}
+    </section>
+
+    {%- assign images = site.static_files | where_exp: 'file', 'file.path contains page.imagePath' -%}
+    <div class="js-gallery align-items-center card-deck">
+        {% for image in images -%}
+            {%- assign columnIndex = forloop.index0 | modulo: 3 -%}
+            {%- if columnIndex == 0 and forloop.first == false %}
+                </div>
+
+                <div class="js-gallery align-items-center card-deck">
+            {% endif -%}
+
+            {%- assign imagePath = page.imagePath | append: '/' | append: image.name -%}
+            {%-
+                assign aspectRatio = assets[imagePath].dimensions.width
+                | times: 1.0
+                | divided_by: assets[imagePath].dimensions.height
+            -%}
+            <figure class="card mt-4">
+                <a
+                    href="{{ imagePath | asset: 'magick:resize=1920 @path' }}"
+                    data-size="
+                        {%- if aspectRatio > 1 -%}
+                            1920x{{- 1920 | divided_by: aspectRatio | round -}}
+                        {%- else -%}
+                            {{- 1920 | times: aspectRatio | round -}}x1920
+                        {%- endif -%}
+                    "
+                >
+                    <img
+                        alt="{{ page.captions[image.name] }}"
+                        class="img-fluid card-img-top"
+                        sizes="{{- '' -}}
+                            (min-width: 1200px) 348px, {{ '' -}}
+                            (min-width: 992px) 288px, {{ '' -}}
+                            (min-width: 768px) 208px, {{ '' -}}
+                            (min-width: 576px) 148px, {{ '' -}}
+                            calc(100vw - 32px)
+                        {{- '' -}}"
+                        src="{{ imagePath | asset: 'magick:resize=1920 @path' }}"
+                        srcset="
+                            {{ imagePath | asset: 'magick:resize="543x" @path' }} 543w,
+                            {{ imagePath | asset: 'magick:resize="348x" @path' }} 348w,
+                            {{ imagePath | asset: 'magick:resize="288x" @path' }} 288w,
+                            {{ imagePath | asset: 'magick:resize="208x" @path' }} 208w,
+                            {{ imagePath | asset: 'magick:resize="148x" @path' }} 148w
+                        "
+                    />
+                </a>
+
+                {% if page.captions[image.name] -%}
+                    <figcaption class="card-body">
+                        <p class="card-text text-center">{{ page.captions[image.name] }}</p>
+                    </figcaption>
+                {%- endif %}
+            </figure>
+        {%- endfor %}
+    </div>
+</div>
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Schließen (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Teilen"></button>
+                <button class="pswp__button pswp__button--fs" title="Vollbild umschalten"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Vorheriges (Pfeil links)"></button>
+            <button class="pswp__button pswp__button--arrow--right" title="Nächstes (Pfeil rechts)"></button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js"
+    integrity="sha256-iG1tiE5xJSJQhKdeOW4cPiSy+RTrnRKjjjrVQ0hexug="
+    crossorigin="anonymous"
+></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js"
+    integrity="sha256-XvSk6Opq7XZ8oUcx213MtikXtbl5bbe4Q9tr4+NJBCg="
+    crossorigin="anonymous"
+></script>
+
+<script src="/assets/js/photoSwipe.js"></script>
+
+<script>
+    initPhotoSwipeFromDOM('.js-gallery');
+</script>

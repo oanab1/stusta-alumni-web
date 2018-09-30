@@ -1,0 +1,79 @@
+---
+title: Veranstaltungen
+position: 100
+permalink: veranstaltungen.html
+---
+{%- for event in site.events reversed -%}
+    <section>
+        <h2 class="d-flex justify-content-between align-items-baseline flex-wrap">
+            {{ event.title }}
+            <small>{{- event.date | date: '%d.%m.%Y' -}}</small>{{- '' -}}
+        </h2>
+
+        <div>
+            {% if event.teaserPic -%}
+                {%- assign teaserPic = site.static_files
+                    | where_exp: 'file', 'file.path contains event.imagePath'
+                    | where_exp: 'file', 'file.path contains event.teaserPic'
+                    | first
+                -%}
+                <div class="row">
+                    <div class="col-md-4">
+                        <figure class="card">
+                            {% if event.imagePath -%}
+                                <a href="{{ event.url }}" title="Zu den Bildern">
+                                    {% assign imagePath = event.imagePath | append: '/' | append: teaserPic.name -%}
+                                    {%- assign maxImagePath = imagePath | asset: 'magick:resize=1920 @path' -%}
+                                    <img
+                                        alt='{{ event.captions[image.name] }}'
+                                        class="img-fluid card-img-top"
+                                        sizes='{{- '' -}}
+                                            (min-width: 1200px) 348px, {{ '' -}}
+                                            (min-width: 992px) 288px, {{ '' -}}
+                                            (min-width: 768px) 208px, {{ '' -}}
+                                            (min-width: 576px) 508px, {{ '' -}}
+                                            calc(100vw - 30px)
+                                        {{- '' -}}'
+                                        src="{{ maxImagePath }}"
+                                        srcset="
+                                            {{ imagePath | asset: 'magick:resize="543x" @path' }} 543w,
+                                            {{ imagePath | asset: 'magick:resize="508x" @path' }} 508w,
+                                            {{ imagePath | asset: 'magick:resize="348x" @path' }} 348w,
+                                            {{ imagePath | asset: 'magick:resize="288x" @path' }} 288w,
+                                            {{ imagePath | asset: 'magick:resize="208x" @path' }} 208w
+                                        "
+                                    />
+                                </a>
+                            {%- else -%}
+                                <img class="img-fluid card-img-top" src="{{ event.teaserPic }}"/>
+                            {%- endif %}
+                            {% if event.teaserCaption or event.captions[teaserPic.name]-%}
+                                <figcaption class="card-body">
+                                    <p class="card-text text-center text-muted">
+                                        {{ event.teaserCaption | default: event.captions[teaserPic.name] }}
+                                    </p>
+                                </figcaption>
+                            {%- endif %}
+                        </figure>
+
+                        {% if event.imagePath -%}
+                            <p>
+                                <a href="{{ event.url }}" class="btn btn-block btn-secondary btn-info">Zu den Bildern</a>
+                            </p>
+                        {%- endif %}
+                    </div>
+
+                    <div class="col-md-8">
+                        <div>
+                            {{ event.content }}
+                        </div>
+                    </div>
+                </div>
+            {%- else -%}
+                <p>
+                    {{ event.content }}
+                </p>
+            {%- endif %}
+        </div>
+    </section>
+{%- endfor -%}

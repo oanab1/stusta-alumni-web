@@ -1,19 +1,50 @@
+assets:
+  sources: [assets/events]
+  destination: /assets/events
+  plugins:
+    img:
+      optim:
+        verbose: true
+        pack: true
+        allow_lossy: true
+        advpng:
+          level: 4
+        jhead: true
+        jpegoptim:
+          allow_lossy: true
+          strip: false
+        jpegrecompress:
+          allow_lossy: true
+          quality: 2
+        jpegtran:
+          jpegrescan: false
+        optipng:
+          level: 7
+          interlace: nil
+        pngcrush:
+          fix: true
+        pngquant:
+          allow_lossy: true
+          speed: 1
+
 collections:
   events:
     output: true
 
 defaults:
   - scope:
-      path: ''
       type: events
     values:
       layout: event
-      singleView: true
+      navSection: Veranstaltungen
   - scope:
       path: ''
     values:
       layout: wide
-  - scope:
-      path: assets/events
-    values:
-      collection: events
+
+exclude:
+  - .idea/
+  - .jekyll-cache/
+  - .sass-cache/
+  - Gemfile
+  - Gemfile.lock

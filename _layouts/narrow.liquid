@@ -1,0 +1,14 @@
+---
+layout: wide
+---
+<div class="row">
+    <div class="col-md-8">
+        {{ content }}
+    </div>
+    
+    {% if page.toc %}
+        <div class="col-md-4">
+            {% include toc.liquid html=content id="toc" class="list-group" item_class="list-group-item" %}
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,30 @@
+{% capture tocWorkspace %}
+    {% assign ids = include.html | split: 'id="' %}
+    {% assign first = true %}
+    {% for id in ids %}
+        {% if first %}
+            {% assign first = false %}
+            {% continue %}
+        {% elsif id == "" %}
+            {% continue %}
+        {% endif %}
+
+        {% assign _workspace = id | split: '"' %}
+        {% assign html_id = _workspace[0] %}
+        {% assign _workspace = id | split: '>' %}
+        {% assign header = _workspace[1] | split: '<' | first %}
+
+        {% unless include.item_class == blank %}
+            {% capture listItemClass %}class="{{ include.item_class }}"{% endcapture %}
+        {% endunless %}
+
+        {% capture my_toc %}{{ my_toc }}
+            <a href="#{{ html_id }}" {{ listItemClass }}>{{ header | strip_html }}</a>{% endcapture %}
+    {% endfor %}
+
+    {% capture my_toc %}
+        <nav {% if include.class %}class="{{ include.class }}"{% endif %} {% if include.id %}id="{{ include.id }}"{% endif %}>
+            {{ my_toc | lstrip }}
+        </nav>
+    {% endcapture %}
+{% endcapture %}{% assign tocWorkspace = '' %}{{ my_toc }}
