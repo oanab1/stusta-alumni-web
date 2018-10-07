@@ -16,62 +16,64 @@ layout: default
         {{ content }}
     </section>
 
-    {%- assign images = site.static_files | where_exp: 'file', 'file.path contains page.imagePath' -%}
-    <div class="js-gallery align-items-center card-deck">
-        {% for image in images -%}
-            {%- assign columnIndex = forloop.index0 | modulo: 3 -%}
-            {%- if columnIndex == 0 and forloop.first == false %}
-                </div>
+    <section class="js-gallery">
+        {%- assign images = site.static_files | where_exp: 'file', 'file.path contains page.imagePath' -%}
+        <div class="align-items-center card-deck">
+            {% for image in images -%}
+                {%- assign columnIndex = forloop.index0 | modulo: 3 -%}
+                {%- if columnIndex == 0 and forloop.first == false %}
+                    </div>
 
-                <div class="js-gallery align-items-center card-deck">
-            {% endif -%}
+                    <div class="align-items-baseline card-deck">
+                {% endif -%}
 
-            {%- assign imagePath = page.imagePath | append: '/' | append: image.name -%}
-            {%-
-                assign aspectRatio = assets[imagePath].dimensions.width
-                | times: 1.0
-                | divided_by: assets[imagePath].dimensions.height
-            -%}
-            <figure class="card mt-4">
-                <a
-                    href="{{ imagePath | asset: 'magick:resize=1920 @path' }}"
-                    data-size="
-                        {%- if aspectRatio > 1 -%}
-                            1920x{{- 1920 | divided_by: aspectRatio | round -}}
-                        {%- else -%}
-                            {{- 1920 | times: aspectRatio | round -}}x1920
-                        {%- endif -%}
-                    "
-                >
-                    <img
-                        alt="{{ page.captions[image.name] }}"
-                        class="img-fluid card-img-top"
-                        sizes="{{- '' -}}
-                            (min-width: 1200px) 348px, {{ '' -}}
-                            (min-width: 992px) 288px, {{ '' -}}
-                            (min-width: 768px) 208px, {{ '' -}}
-                            (min-width: 576px) 148px, {{ '' -}}
-                            calc(100vw - 32px)
-                        {{- '' -}}"
-                        src="{{ imagePath | asset: 'magick:resize=1920 @path' }}"
-                        srcset="
-                            {{ imagePath | asset: 'magick:resize="543x" @path' }} 543w,
-                            {{ imagePath | asset: 'magick:resize="348x" @path' }} 348w,
-                            {{ imagePath | asset: 'magick:resize="288x" @path' }} 288w,
-                            {{ imagePath | asset: 'magick:resize="208x" @path' }} 208w,
-                            {{ imagePath | asset: 'magick:resize="148x" @path' }} 148w
+                {%- assign imagePath = page.imagePath | append: '/' | append: image.name -%}
+                {%-
+                    assign aspectRatio = assets[imagePath].dimensions.width
+                    | times: 1.0
+                    | divided_by: assets[imagePath].dimensions.height
+                -%}
+                <figure class="card mt-4">
+                    <a
+                        href="{{ imagePath | asset: 'magick:resize=1920 @path' }}"
+                        data-size="
+                            {%- if aspectRatio > 1 -%}
+                                1920x{{- 1920 | divided_by: aspectRatio | round -}}
+                            {%- else -%}
+                                {{- 1920 | times: aspectRatio | round -}}x1920
+                            {%- endif -%}
                         "
-                    />
-                </a>
+                    >
+                        <img
+                            alt="{{ page.captions[image.name] }}"
+                            class="img-fluid card-img-top"
+                            sizes="{{- '' -}}
+                                (min-width: 1200px) 348px, {{ '' -}}
+                                (min-width: 992px) 288px, {{ '' -}}
+                                (min-width: 768px) 208px, {{ '' -}}
+                                (min-width: 576px) 148px, {{ '' -}}
+                                calc(100vw - 32px)
+                            {{- '' -}}"
+                            src="{{ imagePath | asset: 'magick:resize=1920 @path' }}"
+                            srcset="
+                                {{ imagePath | asset: 'magick:resize="543x" @path' }} 543w,
+                                {{ imagePath | asset: 'magick:resize="348x" @path' }} 348w,
+                                {{ imagePath | asset: 'magick:resize="288x" @path' }} 288w,
+                                {{ imagePath | asset: 'magick:resize="208x" @path' }} 208w,
+                                {{ imagePath | asset: 'magick:resize="148x" @path' }} 148w
+                            "
+                        />
+                    </a>
 
-                {% if page.captions[image.name] -%}
-                    <figcaption class="card-body">
-                        <p class="card-text text-center">{{ page.captions[image.name] }}</p>
-                    </figcaption>
-                {%- endif %}
-            </figure>
-        {%- endfor %}
-    </div>
+                    {% if page.captions[image.name] -%}
+                        <figcaption class="card-body">
+                            <p class="card-text text-center">{{ page.captions[image.name] }}</p>
+                        </figcaption>
+                    {%- endif %}
+                </figure>
+            {%- endfor %}
+        </div>
+    </section>
 </div>
 
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
