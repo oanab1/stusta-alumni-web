@@ -11,11 +11,25 @@ body {
 }
 
 .jumbotron {
-    background: #66503d;
-    background: -moz-linear-gradient(45deg, #66503d 0%, #947445 25%, #b89c53 37.5%, #d7c563 50%, #d8d169 62.5%, #beb965 75%, #aea677 100%);
-    background: -webkit-linear-gradient(45deg, #66503d 0%, #947445 25%, #b89c53 37.5%, #d7c563 50%, #d8d169 62.5%, #beb965 75%, #aea677 100%);
-    background: linear-gradient(45deg, #66503d 0%, #947445 25%, #b89c53 37.5%, #d7c563 50%, #d8d169 62.5%, #beb965 75%, #aea677 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66503d', endColorstr='#aea677',GradientType=1 );
+    background: #10110a;
+    background: -webkit-linear-gradient(87deg, #141d08 0%, #0d060d 100%);
+    background: -o-linear-gradient(87deg, #141d08 0%, #0d060d 100%);
+    background: -ms-linear-gradient(87deg, #141d08 0%, #0d060d 100%);
+    background: -moz-linear-gradient(87deg, #141d08 0%, #0d060d 100%);
+    background: linear-gradient(3deg, #141d08 0%, #0d060d 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#141d08', endColorstr='#0d060d',GradientType=1 );
+
+    position: relative;
+    z-index: -2;
+}
+
+.jumbotron__background {
+    position: absolute;
+    top:0;
+    right:0;
+    height: 100%;
+    width: auto;
+    z-index: -1;
 }
 
 .pswp__caption__center {

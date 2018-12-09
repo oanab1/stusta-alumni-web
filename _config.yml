@@ -1,6 +1,8 @@
 assets:
-  sources: [assets/events]
-  destination: /assets/events
+  sources:
+    - assets/events
+    - assets/img
+  destination: /assets/img
   plugins:
     img:
       optim:
