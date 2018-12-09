@@ -20,7 +20,6 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#141d08', endColorstr='#0d060d',GradientType=1 );
 
     position: relative;
-    z-index: -2;
 }
 
 .jumbotron__background {
@@ -29,7 +28,11 @@ body {
     right:0;
     height: 100%;
     width: auto;
-    z-index: -1;
+}
+
+.jumbotron .container {
+    position: relative;
+    z-index: 1;
 }
 
 .pswp__caption__center {
