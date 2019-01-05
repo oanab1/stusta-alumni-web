@@ -141,7 +141,7 @@ const initPhotoSwipeFromDOM = function(gallerySelector) {
         // PhotoSwipe opened from URL
         if(fromURL) {
             if(options.galleryPIDs) {
-                // parse real index when custom PIDs are used 
+                // parse real index when custom PIDs are used
                 // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
                 for(let j = 0; j < items.length; j++) {
                     if(items[j].pid === index) {
@@ -179,7 +179,10 @@ const initPhotoSwipeFromDOM = function(gallerySelector) {
         galleryElement.setAttribute('data-pswp-uid', ++galleryCount);
         let figureElements = galleryElement.getElementsByTagName('figure');
         for (let figureElement of figureElements) {
-            figureElement.onclick = onThumbnailsClick;
+            let aElements = figureElement.getElementsByTagName('a');
+            for (let aElement of aElements) {
+                aElement.onclick = onThumbnailsClick;
+            }
         }
     }
 
@@ -189,3 +192,5 @@ const initPhotoSwipeFromDOM = function(gallerySelector) {
         openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
     }
 };
+
+initPhotoSwipeFromDOM('.js-gallery');

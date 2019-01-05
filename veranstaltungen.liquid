@@ -18,16 +18,39 @@ permalink: veranstaltungen.html
                     | first
                 -%}
                 <div class="row">
-                    <div class="col-md-4">
+                    {% if event.imagePath -%}
+                        {%- assign images = site.static_files | where_exp: 'file', 'file.path contains event.imagePath' -%}
+                        {%- assign imageCount = images | size -%}
+                        {%- assign imagePath = event.imagePath | append: '/' | append: teaserPic.name -%}
+                        {%-
+                            assign aspectRatio = assets[imagePath].dimensions.width
+                            | times: 1.0
+                            | divided_by: assets[imagePath].dimensions.height
+                        -%}
+                        {%- assign maxImagePath = imagePath | asset: 'magick:resize=1920 @path' -%}
+                    {%- else -%}
+                        {%- assign imageCount = 0 -%}
+                    {%- endif -%}
+
+                    <div class="col-md-4 {% if imageCount == 1 -%}js-gallery{%- endif -%}">
                         <figure class="card">
                             {% if event.imagePath -%}
-                                {%- assign images = site.static_files | where_exp: 'file', 'file.path contains event.imagePath' -%}
-                                {%- assign imageCount = images | size -%}
-                                {%- if imageCount > 1 %}
-                                    <a href="{{ event.url }}" title="Zu den Bildern">
-                                {% endif -%}
-                                    {%- assign imagePath = event.imagePath | append: '/' | append: teaserPic.name -%}
-                                    {%- assign maxImagePath = imagePath | asset: 'magick:resize=1920 @path' -%}
+                                <a
+                                    {%- if imageCount > 1 %}
+                                        href="{{ event.url }}"
+                                        title="Zu den Bildern"
+                                    {%- else %}
+                                        href="{{ imagePath | asset: 'magick:resize=1920 @path' }}"
+                                        title="Bild vergrößern"
+                                        data-size="
+                                            {%- if aspectRatio > 1 -%}
+                                                1920x{{- 1920 | divided_by: aspectRatio | round -}}
+                                            {%- else -%}
+                                                {{- 1920 | times: aspectRatio | round -}}x1920
+                                            {%- endif -%}
+                                        "
+                                    {%- endif %}
+                                >
                                     <img
                                         alt='{{ event.altTexts[teaserPic.name] }}'
                                         class="img-fluid card-img-top"
@@ -47,12 +70,15 @@ permalink: veranstaltungen.html
                                             {{ imagePath | asset: 'magick:resize="208x" @path' }} 208w
                                         "
                                     />
-                                {%- if imageCount > 1 %}
-                                    </a>
-                                {% endif -%}
+                                </a>
                             {%- else -%}
-                                <img class="img-fluid card-img-top" src="{{ event.teaserPic }}"/>
+                                <img
+                                    class="img-fluid card-img-top"
+                                    src="{{ event.teaserPic }}"
+                                    alt="{{ event.teaserAltText }}"
+                                />
                             {%- endif %}
+
                             {% if event.teaserCaption or event.captions[teaserPic.name]-%}
                                 <figcaption class="card-body">
                                     <p class="card-text text-center text-muted">
@@ -83,3 +109,5 @@ permalink: veranstaltungen.html
         </div>
     </section>
 {%- endfor -%}
+
+{% include pswp.liquid %}
