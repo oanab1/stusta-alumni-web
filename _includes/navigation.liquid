@@ -1,6 +1,13 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{% link index.liquid %}"><span>StuSta-Alumni e.V.</span></a>
+        <a class="navbar-brand" href="{% link index.liquid %}">
+            <svg viewBox="0 0 556 387" style="height: 30px;">
+                <use
+                    href="assets/img/stusta_alumni_logo_only.svg#logo"
+                ></use>
+            </svg>
+            <span>StuSta-Alumni e.V.</span>
+        </a>
         {% unless page.hide_cta %}
             <a
                 class="navbar-btn btn btn-secondary btn-primary"

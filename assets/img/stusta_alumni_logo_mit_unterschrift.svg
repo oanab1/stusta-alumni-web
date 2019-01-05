@@ -53,18 +53,18 @@
             stroke-miterlimit="10"
             stroke-width="11"
         >
-            <g transform="translate(0 4.3102)">
+            <g transform="translate(5.5 5.5)">
                 <path
                     id="bigSquare"
-                    d="M 0 0 L 434.723 0 L 434.723 329.167 L 0 329.167 Z"
+                    d="M 0 0 L 435 0 L 435 329 L 0 329 Z"
                     fill="#a9a9aa"
                 />
             </g>
 
-            <g transform="translate(244.446 162.6422)">
+            <g transform="translate(249.5 163.5)">
                 <path
                     id="smallSquare"
-                    d="M 0 0 L 301.389 0 L 301.389 218.057 L 0 218.057 Z"
+                    d="M 0 0 L 301 0 L 301 218 L 0 218 Z"
                     fill="#ffffff"
                 />
             </g>

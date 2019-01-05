@@ -1,0 +1,32 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="556"
+    height="387"
+    viewBox="0 0 556 387"
+    id="logo"
+>
+    <g
+        id="squares"
+        stroke="#010202"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-miterlimit="10"
+        stroke-width="11"
+    >
+        <g transform="translate(5.5 5.5)">
+            <path
+                id="bigSquare"
+                d="M 0 0 L 435 0 L 435 329 L 0 329 Z"
+                fill="#a9a9aa"
+            />
+        </g>
+
+        <g transform="translate(249.5 163.5)">
+            <path
+                id="smallSquare"
+                d="M 0 0 L 301 0 L 301 218 L 0 218 Z"
+                fill="#ffffff"
+            />
+        </g>
+    </g>
+</svg>
