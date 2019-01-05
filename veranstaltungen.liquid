@@ -21,11 +21,15 @@ permalink: veranstaltungen.html
                     <div class="col-md-4">
                         <figure class="card">
                             {% if event.imagePath -%}
-                                <a href="{{ event.url }}" title="Zu den Bildern">
-                                    {% assign imagePath = event.imagePath | append: '/' | append: teaserPic.name -%}
+                                {%- assign images = site.static_files | where_exp: 'file', 'file.path contains event.imagePath' -%}
+                                {%- assign imageCount = images | size -%}
+                                {%- if imageCount > 1 %}
+                                    <a href="{{ event.url }}" title="Zu den Bildern">
+                                {% endif -%}
+                                    {%- assign imagePath = event.imagePath | append: '/' | append: teaserPic.name -%}
                                     {%- assign maxImagePath = imagePath | asset: 'magick:resize=1920 @path' -%}
                                     <img
-                                        alt='{{ event.captions[image.name] }}'
+                                        alt='{{ event.altTexts[teaserPic.name] }}'
                                         class="img-fluid card-img-top"
                                         sizes='{{- '' -}}
                                             (min-width: 1200px) 348px, {{ '' -}}
@@ -43,7 +47,9 @@ permalink: veranstaltungen.html
                                             {{ imagePath | asset: 'magick:resize="208x" @path' }} 208w
                                         "
                                     />
-                                </a>
+                                {%- if imageCount > 1 %}
+                                    </a>
+                                {% endif -%}
                             {%- else -%}
                                 <img class="img-fluid card-img-top" src="{{ event.teaserPic }}"/>
                             {%- endif %}
@@ -56,7 +62,7 @@ permalink: veranstaltungen.html
                             {%- endif %}
                         </figure>
 
-                        {% if event.imagePath -%}
+                        {% if imageCount > 1 -%}
                             <p>
                                 <a href="{{ event.url }}" class="btn btn-block btn-secondary btn-info">Zu den Bildern</a>
                             </p>
