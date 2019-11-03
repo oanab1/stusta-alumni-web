@@ -7,7 +7,7 @@ gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 group :jekyll_plugins do
     gem 'jekyll-assets'
 end
-gem "sprockets", "~> 4.0.beta", {
+gem "sprockets", "= 4.0.0.beta8", {
   require: false
 }
 group :assets_plugins do
